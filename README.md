@@ -14,6 +14,9 @@
 - What are the main sources of revenue
 - What are the main categories/subcategories of spending
 
+## ChatGPT 
+https://chat.openai.com/g/g-LWrW4JWZN-dollars-and-sense
+
 ## Data sources: 
 https://public.tableau.com/app/profile/sfusd.budget/viz/SFUSDBudget2021-22/2021-22BudgetDashboard
 https://public.tableau.com/app/profile/sfusd.budget/viz/SFUSDBudget2020-21/2020-21BudgetDashboard
