@@ -42,7 +42,7 @@ Jupyter notebook to web app, Voila: https://github.com/voila-dashboards/voila  @
 
 Jupyter notebook to web app, Anvil: https://github.com/anvil-works/anvil-runtime @kn2118 @aishwarya-singh25
 
-## Week Nov 20 
+## Week of Nov 20 
 
 @kn2118 @aishwarya-singh25 
 - Reproducible data cleaning pipelines in notebook
