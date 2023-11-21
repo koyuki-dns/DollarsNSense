@@ -26,6 +26,8 @@ https://www.sfeducationalliance.com/blog/sfusd-budget-exploration/#narr
 https://sf.gov/resource/2023/open-data
 https://data.sfgov.org/browse
 https://data.sfgov.org/City-Management-and-Ethics/Spending-and-Revenue/bpnb-jwfb
+https://missionlocal.org/2023/08/explore-san-francisco-budget-2023-2024-2025/#revenue
+https://github.com/MissionLocal/interactives
 
 ## Data dictionary: 
 https://data.sfgov.org/City-Management-and-Ethics/Inventory-of-citywide-enterprise-systems-of-record/ebux-gcnq
