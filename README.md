@@ -35,16 +35,22 @@ https://drive.google.com/drive/folders/1GoECKxPTRUjO1mp3Zm822rTAwiK_nrll
 
 ## Other sources 
 Custom GPT integration: https://platform.openai.com/docs/assistants/overview  @InfiniteSwerve
+
 Squarespace subdomain https://support.squarespace.com/hc/en-us/articles/205812058-Creating-a-subdomain-for-your-Squarespace-site @InfiniteSwerve
+
 Jupyter notebook to web app, Voila: https://github.com/voila-dashboards/voila  @kn2118 @aishwarya-singh25
+
 Jupyter notebook to web app, Anvil: https://github.com/anvil-works/anvil-runtime @kn2118 @aishwarya-singh25
 
 ## Week Nov 20 
+
 @kn2118 @aishwarya-singh25 
 - Reproducible data cleaning pipelines in notebook
+
 - Vis in notebook for top tier questions 
   
 @InfiniteSwerve
 - Custom GPT integration into Squarespace subdomain  https://chat.openai.com/g/g-LWrW4JWZN-dollars-and-sense
+  
 - Squarespace subdomain to main site 
 
