@@ -17,7 +17,7 @@
 ## ChatGPT 
 https://chat.openai.com/g/g-LWrW4JWZN-dollars-and-sense
 
-## Data sources: 
+## Data sources 
 https://public.tableau.com/app/profile/sfusd.budget/viz/SFUSDBudget2021-22/2021-22BudgetDashboard
 https://public.tableau.com/app/profile/sfusd.budget/viz/SFUSDBudget2020-21/2020-21BudgetDashboard
 https://public.tableau.com/app/profile/sfusd.budget/viz/SFUSDBudget2019-20/2019-20BudgetDashboard
@@ -29,7 +29,7 @@ https://data.sfgov.org/City-Management-and-Ethics/Spending-and-Revenue/bpnb-jwfb
 https://missionlocal.org/2023/08/explore-san-francisco-budget-2023-2024-2025/#revenue
 https://github.com/MissionLocal/interactives
 
-## Data dictionary: 
+## Data dictionary 
 https://data.sfgov.org/City-Management-and-Ethics/Inventory-of-citywide-enterprise-systems-of-record/ebux-gcnq
 
 ## Project folder
