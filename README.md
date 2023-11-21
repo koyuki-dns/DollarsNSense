@@ -1,6 +1,6 @@
 # DollarsNSense
 
-## Interactive dash & Chat UI to support https://www.sfdollarsnsense.com 
+## Interactive dash & chat UI to support https://www.sfdollarsnsense.com 
 
 ## San Franciscans deserve to know how their money is being spent. That’s just basic dollars and sense
 
@@ -30,7 +30,7 @@ https://data.sfgov.org/City-Management-and-Ethics/Spending-and-Revenue/bpnb-jwfb
 ## Data dictionary: 
 https://data.sfgov.org/City-Management-and-Ethics/Inventory-of-citywide-enterprise-systems-of-record/ebux-gcnq
 
-## Project Folder
+## Project folder
 https://drive.google.com/drive/folders/1GoECKxPTRUjO1mp3Zm822rTAwiK_nrll
 
 ## Other sources 
