@@ -1,0 +1,147 @@
+<!-- Chat Interface HTML -->
+<h1>Chat 8!</h1>
+<div id="chat-interface">
+  <div id="chat-display" class="chat-box"></div>
+  <div class="input-container">
+    <input type="text" id="chat-input" class="message-input" placeholder="Type your message here...">
+    <button onclick="sendMessage()" class="send-button">Send</button>
+  </div>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+<style>
+#chat-interface {
+    font-family: 'Nunito', sans-serif;
+    max-width: 700px;
+    height: 60vh; /* Reduced from 80vh to 60vh */
+    margin: 50px auto;
+    border: 3px solid #ced4da;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Add this to hide overflow */
+}
+  
+#chat-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 3px solid #dee2e6;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #e9ecef;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#chat-display p {
+    margin: 15px 0;
+    padding: 15px 20px;
+    border-radius: 25px;
+    background-color: #e2e3e5;
+    word-wrap: break-word;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.2rem;
+    line-height: 1.7;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#chat-input {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: 3px solid #ced4da;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    outline: none;
+}
+
+button {
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover, button:focus {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    outline: none;
+}
+
+@media screen and (max-width: 700px) {
+    #chat-interface {
+        width: 96vw;
+        height: 90vh;
+    }
+}
+
+</style>
+
+
+
+<script>
+
+document.getElementById('chat-input').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent default Enter key behavior
+        sendMessage();
+    }
+});
+    function sendMessage() {
+        var inputField = document.getElementById('chat-input');
+        var message = inputField.value;
+        inputField.value = ''; // Clear the input field
+
+        updateChatDisplay('You: ' + message, true); // Show user's message
+
+        // Send the message to your server
+        fetch('https://flask-server-virid.vercel.app/chat', {  // Replace with your Lightsail IP and route
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateChatDisplay('ChatGPT: ' + data.response, false);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+function updateChatDisplay(message, isUserMessage) {
+    var chatDisplay = document.getElementById('chat-display');
+    var messageContainer = document.createElement('div');
+    messageContainer.className = 'message-container';
+    var messageElement = document.createElement('p');
+    messageElement.textContent = message;
+
+    if (isUserMessage) {
+        messageElement.className = 'message-user';
+    } else {
+        messageElement.className = 'message-gpt';
+    }
+  
+    messageContainer.appendChild(messageElement);
+    chatDisplay.appendChild(messageContainer);
+    chatDisplay.scrollTop = chatDisplay.scrollHeight;
+}
+
+</script>
