@@ -32,10 +32,22 @@
     padding: 20px;
     margin-bottom: 20px;
     background-color: #e9ecef;
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
+#chat-display::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chat-display::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px;
+}
+
+#chat-display::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
 
 #chat-display p {
     margin: 15px 0;
