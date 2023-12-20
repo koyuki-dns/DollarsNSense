@@ -125,6 +125,11 @@
     var message = inputField.value;
     var threadId = localStorage.getItem('thread_id');
 
+    sendButton.disabled = true;
+    sendButton.textContent = '. . .'; // Change button text
+    sendButton.style.backgroundColor = '#ccc'; // Grey out the button
+    sendButton.style.color = '#666'; // Optional: change text color if needed
+
     if (message.trim() === '') return; // Prevent sending empty messages
 
     inputField.value = ''; // Clear the input field
@@ -144,7 +149,6 @@
         // a 'new chat' button if we want
         localStorage.setItem('thread_id', data.thread_id)
         checkRun(data.run_id, data.thread_id);
-        sendButton.disabled = false; // Re-enable the send button once the checkRun starts
       })
       .catch(error => {
         console.error('Error:', error);
@@ -153,6 +157,7 @@
   }
   function checkRun(run_id, thread_id) {
     const checkInterval = 500;
+    const sendButton = document.getElementById('send-button');
 
     const interval = setInterval(() => {
       fetch('https://flask-server-virid.vercel.app/check_run', {
@@ -167,11 +172,19 @@
           if (data.status) {
             clearInterval(interval);
             updateChatDisplay('ChatGPT: ' + data.response, false);
+            sendButton.disabled = false;
+            sendButton.textContent = 'Send'; // Reset button text
+            sendButton.style.backgroundColor = ''; // Reset button style
+            sendButton.style.color = ''; // Reset text color if changed
           }
         })
         .catch(error => {
           console.error('Error:', error);
           clearInterval(interval);
+          sendButton.disabled = false; // Re-enable the send button once the checkRun starts
+          sendButton.textContent = 'Send'; // Reset button text
+          sendButton.style.backgroundColor = ''; // Reset button style
+          sendButton.style.color = ''; // Reset text color if changed
         });
     }, checkInterval);
   }
