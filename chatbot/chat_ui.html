@@ -8,22 +8,24 @@
 </div>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
 <style>
-#chat-interface {
+  #chat-interface {
     font-family: 'Nunito', sans-serif;
     max-width: 700px;
-    height: 60vh; /* Reduced from 80vh to 60vh */
+    height: 60vh;
+    /* Reduced from 80vh to 60vh */
     margin: 50px auto;
     border: 3px solid #ced4da;
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     background-color: #f8f9fa;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Add this to hide overflow */
-}
-  
-#chat-display {
+    overflow: hidden;
+    /* Add this to hide overflow */
+  }
+
+  #chat-display {
     flex-grow: 1;
     overflow-y: auto;
     border: 3px solid #dee2e6;
@@ -33,22 +35,23 @@
     background-color: #e9ecef;
     flex-direction: column;
     justify-content: flex-end;
-}
-#chat-display::-webkit-scrollbar {
+  }
+
+  #chat-display::-webkit-scrollbar {
     width: 10px;
-}
+  }
 
-#chat-display::-webkit-scrollbar-thumb {
-    background: #888; 
+  #chat-display::-webkit-scrollbar-thumb {
+    background: #888;
     border-radius: 10px;
-}
+  }
 
-#chat-display::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-}
+  #chat-display::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
 
-#chat-display p {
+  #chat-display p {
     margin: 15px 0;
     padding: 15px 20px;
     border-radius: 25px;
@@ -57,14 +60,14 @@
     font-family: 'Source Code Pro', monospace;
     font-size: 1.2rem;
     line-height: 1.7;
-}
+  }
 
-.input-container {
+  .input-container {
     display: flex;
     justify-content: space-between;
-}
+  }
 
-#chat-input {
+  #chat-input {
     flex-grow: 1;
     padding: 15px 20px;
     border-radius: 15px;
@@ -73,9 +76,9 @@
     font-size: 1.2rem;
     margin-right: 15px;
     outline: none;
-}
+  }
 
-button {
+  button {
     padding: 15px 20px;
     border-radius: 15px;
     border: none;
@@ -85,59 +88,83 @@ button {
     font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
-}
+  }
 
-button:hover, button:focus {
+  button:hover,
+  button:focus {
     background-color: #218838;
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     outline: none;
-}
+  }
 
-@media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) {
     #chat-interface {
-        width: 96vw;
-        height: 90vh;
+      width: 96vw;
+      height: 90vh;
     }
-}
-
+  }
 </style>
 
 
 
 <script>
 
-document.getElementById('chat-input').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent default Enter key behavior
-        sendMessage();
+  document.getElementById('chat-input').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') & messageElement.className = 'message-user' {
+      event.preventDefault(); // Prevent default Enter key behavior
+      sendMessage();
     }
-});
-    function sendMessage() {
-        var inputField = document.getElementById('chat-input');
-        var message = inputField.value;
-        inputField.value = ''; // Clear the input field
+  });
 
-        updateChatDisplay('You: ' + message, true); // Show user's message
 
-        // Send the message to your server
-        fetch('https://flask-server-virid.vercel.app/chat', {  // Replace with your Lightsail IP and route
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: message }),
-        })
+  function sendMessage() {
+    var inputField = document.getElementById('chat-input');
+    var message = inputField.value;
+    inputField.value = ''; // Clear the input field
+
+    updateChatDisplay('You: ' + message, true);
+
+    fetch('https://flask-server-virid.vercel.app/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: message }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        checkRun(data.run_id, data.thread_id)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+  function checkRun(run_id, thread_id) {
+    const checkInterval = 500;
+
+    const interval = setInterval(() => {
+      fetch('https://flask-server-virid.vercel.app/check_run', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ thread_id: thread_id, run_id: run_id })
+      })
         .then(response => response.json())
         .then(data => {
+          if (data.status) {
+            clearInterval(interval);
             updateChatDisplay('ChatGPT: ' + data.response, false);
+          }
         })
         .catch(error => {
-            console.error('Error:', error);
+          console.error('Error:', error);
+          clearInterval(interval);
         });
-    }
-
-function updateChatDisplay(message, isUserMessage) {
+    }, checkInterval);
+  }
+  function updateChatDisplay(message, isUserMessage) {
     var chatDisplay = document.getElementById('chat-display');
     var messageContainer = document.createElement('div');
     messageContainer.className = 'message-container';
@@ -145,14 +172,14 @@ function updateChatDisplay(message, isUserMessage) {
     messageElement.textContent = message;
 
     if (isUserMessage) {
-        messageElement.className = 'message-user';
+      messageElement.className = 'message-user';
     } else {
-        messageElement.className = 'message-gpt';
+      messageElement.className = 'message-gpt';
     }
-  
+
     messageContainer.appendChild(messageElement);
     chatDisplay.appendChild(messageContainer);
     chatDisplay.scrollTop = chatDisplay.scrollHeight;
-}
+  }
 
 </script>
