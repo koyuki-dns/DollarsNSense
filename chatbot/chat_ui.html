@@ -170,23 +170,23 @@
           clearInterval(interval);
         });
     }, checkInterval);
-    // }
-    function updateChatDisplay(message, isUserMessage) {
-      var chatDisplay = document.getElementById('chat-display');
-      var messageContainer = document.createElement('div');
-      messageContainer.className = 'message-container';
-      var messageElement = document.createElement('p');
-      messageElement.textContent = message;
+  }
+  function updateChatDisplay(message, isUserMessage) {
+    var chatDisplay = document.getElementById('chat-display');
+    var messageContainer = document.createElement('div');
+    messageContainer.className = 'message-container';
+    var messageElement = document.createElement('p');
+    messageElement.textContent = message;
 
-      if (isUserMessage) {
-        messageElement.className = 'message-user';
-      } else {
-        messageElement.className = 'message-gpt';
-      }
-
-      messageContainer.appendChild(messageElement);
-      chatDisplay.appendChild(messageContainer);
-      chatDisplay.scrollTop = chatDisplay.scrollHeight;
+    if (isUserMessage) {
+      messageElement.className = 'message-user';
+    } else {
+      messageElement.className = 'message-gpt';
     }
+
+    messageContainer.appendChild(messageElement);
+    chatDisplay.appendChild(messageContainer);
+    chatDisplay.scrollTop = chatDisplay.scrollHeight;
+  }
 
 </script>
