@@ -123,6 +123,7 @@
     var inputField = document.getElementById('chat-input');
     var sendButton = document.getElementById('send-button');
     var message = inputField.value;
+    var threadId = localStorage.getItem('thread_id');
 
     if (message.trim() === '') return; // Prevent sending empty messages
 
@@ -135,10 +136,13 @@
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({message: message}),
+      body: JSON.stringify({message: message, thread_id: threadId}),
     })
       .then(response => response.json())
       .then(data => {
+        // this can be sessionStorage if we don't want chats persisting across time. We can also add 
+        // a 'new chat' button if we want
+        localStorage.setItem('thread_id', data.thread_id)
         checkRun(data.run_id, data.thread_id);
         sendButton.disabled = false; // Re-enable the send button once the checkRun starts
       })
