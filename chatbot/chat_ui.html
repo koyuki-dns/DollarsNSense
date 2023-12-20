@@ -3,10 +3,12 @@
   <div id="chat-display" class="chat-box"></div>
   <div class="input-container">
     <input type="text" id="chat-input" class="message-input" placeholder="Type your message here...">
-    <button onclick="sendMessage()" class="send-button">Send</button>
+    <button id="send-button" onclick="sendMessage()" class="send-button">Send</button>
   </div>
 </div>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap"
+  rel="stylesheet">
 <style>
   #chat-interface {
     font-family: 'Nunito', sans-serif;
@@ -111,18 +113,21 @@
 <script>
 
   document.getElementById('chat-input').addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') & messageElement.className = 'message-user' {
+    if (event.key === 'Enter') {
       event.preventDefault(); // Prevent default Enter key behavior
       sendMessage();
     }
   });
 
-
   function sendMessage() {
     var inputField = document.getElementById('chat-input');
+    var sendButton = document.getElementById('send-button');
     var message = inputField.value;
-    inputField.value = ''; // Clear the input field
 
+    if (message.trim() === '') return; // Prevent sending empty messages
+
+    inputField.value = ''; // Clear the input field
+    sendButton.disabled = true; // Disable the send button
     updateChatDisplay('You: ' + message, true);
 
     fetch('https://flask-server-virid.vercel.app/chat', {
@@ -130,14 +135,16 @@
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message: message }),
+      body: JSON.stringify({message: message}),
     })
       .then(response => response.json())
       .then(data => {
-        checkRun(data.run_id, data.thread_id)
+        checkRun(data.run_id, data.thread_id);
+        sendButton.disabled = false; // Re-enable the send button once the checkRun starts
       })
       .catch(error => {
         console.error('Error:', error);
+        sendButton.disabled = false; // Re-enable the send button in case of error
       });
   }
   function checkRun(run_id, thread_id) {
@@ -149,7 +156,7 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ thread_id: thread_id, run_id: run_id })
+        body: JSON.stringify({thread_id: thread_id, run_id: run_id})
       })
         .then(response => response.json())
         .then(data => {
@@ -163,23 +170,23 @@
           clearInterval(interval);
         });
     }, checkInterval);
-  }
-  function updateChatDisplay(message, isUserMessage) {
-    var chatDisplay = document.getElementById('chat-display');
-    var messageContainer = document.createElement('div');
-    messageContainer.className = 'message-container';
-    var messageElement = document.createElement('p');
-    messageElement.textContent = message;
+    // }
+    function updateChatDisplay(message, isUserMessage) {
+      var chatDisplay = document.getElementById('chat-display');
+      var messageContainer = document.createElement('div');
+      messageContainer.className = 'message-container';
+      var messageElement = document.createElement('p');
+      messageElement.textContent = message;
 
-    if (isUserMessage) {
-      messageElement.className = 'message-user';
-    } else {
-      messageElement.className = 'message-gpt';
+      if (isUserMessage) {
+        messageElement.className = 'message-user';
+      } else {
+        messageElement.className = 'message-gpt';
+      }
+
+      messageContainer.appendChild(messageElement);
+      chatDisplay.appendChild(messageContainer);
+      chatDisplay.scrollTop = chatDisplay.scrollHeight;
     }
-
-    messageContainer.appendChild(messageElement);
-    chatDisplay.appendChild(messageContainer);
-    chatDisplay.scrollTop = chatDisplay.scrollHeight;
-  }
 
 </script>
